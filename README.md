@@ -38,14 +38,14 @@ MaintenX is a single system of record for these activities. It is a focused MVP 
 
 The MVP covers six areas. Items are implemented phase by phase (see [Progress](#progress)).
 
-| Area | What it does |
-|---|---|
-| **Authentication & organizations** | JWT login, token refresh, current-user profile, admin-managed users, strict organization-level data isolation |
-| **Equipment** | Equipment register with search, filters, pagination, history, and retirement (no hard deletes) |
-| **Preventive maintenance** | Daily/weekly/monthly plans, upcoming/due/overdue views, automatic daily work-order generation (idempotent) |
-| **Work orders** | Create, assign, start, complete, cancel; server-enforced state machine; full activity timeline |
-| **Downtime tracking** | Record breakdowns and recoveries; duration calculated server-side; no overlapping open incidents |
-| **Dashboard & analytics** | Real-database KPIs: downtime, MTTR, MTBF (estimated), preventive maintenance completion rate, charts and rankings |
+| Area                               | What it does                                                                                                      |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Authentication & organizations** | JWT login, token refresh, current-user profile, admin-managed users, strict organization-level data isolation     |
+| **Equipment**                      | Equipment register with search, filters, pagination, history, and retirement (no hard deletes)                    |
+| **Preventive maintenance**         | Daily/weekly/monthly plans, upcoming/due/overdue views, automatic daily work-order generation (idempotent)        |
+| **Work orders**                    | Create, assign, start, complete, cancel; server-enforced state machine; full activity timeline                    |
+| **Downtime tracking**              | Record breakdowns and recoveries; duration calculated server-side; no overlapping open incidents                  |
+| **Dashboard & analytics**          | Real-database KPIs: downtime, MTTR, MTBF (estimated), preventive maintenance completion rate, charts and rankings |
 
 **Work-order workflow**
 
@@ -62,32 +62,32 @@ OPEN / ASSIGNED → CANCELLED
 
 Each user belongs to exactly one organization.
 
-| Capability | Admin | Manager | Technician |
-|---|:---:|:---:|:---:|
-| Manage organization users | ✅ | — | — |
-| Create/edit equipment | ✅ | ✅ | — |
-| View equipment and maintenance plans | ✅ | ✅ | ✅ |
-| Create maintenance plans and work orders | ✅ | ✅ | — |
-| Assign technicians | ✅ | ✅ | — |
-| Start/complete work orders | ✅ | ✅ | Assigned only |
-| Record downtime | ✅ | ✅ | ✅ |
-| View analytics | ✅ | ✅ | — |
+| Capability                               | Admin | Manager |  Technician   |
+| ---------------------------------------- | :---: | :-----: | :-----------: |
+| Manage organization users                |  ✅   |    —    |       —       |
+| Create/edit equipment                    |  ✅   |   ✅    |       —       |
+| View equipment and maintenance plans     |  ✅   |   ✅    |      ✅       |
+| Create maintenance plans and work orders |  ✅   |   ✅    |       —       |
+| Assign technicians                       |  ✅   |   ✅    |       —       |
+| Start/complete work orders               |  ✅   |   ✅    | Assigned only |
+| Record downtime                          |  ✅   |   ✅    |      ✅       |
+| View analytics                           |  ✅   |   ✅    |       —       |
 
 Permissions are enforced by the backend. Hiding a button in the UI is not security.
 
 ## Tech stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Python, Django, Django REST Framework |
-| Auth | JWT (`djangorestframework-simplejwt`) |
-| API docs | OpenAPI / Swagger (`drf-spectacular`) |
-| Database | PostgreSQL 16 |
-| Background jobs | Celery + Redis |
-| Frontend | React, TypeScript, Vite |
+| Layer              | Technology                                                                 |
+| ------------------ | -------------------------------------------------------------------------- |
+| Backend            | Python, Django, Django REST Framework                                      |
+| Auth               | JWT (`djangorestframework-simplejwt`)                                      |
+| API docs           | OpenAPI / Swagger (`drf-spectacular`)                                      |
+| Database           | PostgreSQL 16                                                              |
+| Background jobs    | Celery + Redis                                                             |
+| Frontend           | React, TypeScript, Vite                                                    |
 | Frontend libraries | TanStack Query, React Router, React Hook Form, Zod, Recharts, Tailwind CSS |
-| Testing | pytest, pytest-django |
-| Infrastructure | Docker Compose |
+| Testing            | pytest, pytest-django                                                      |
+| Infrastructure     | Docker Compose                                                             |
 
 ## Architecture
 
@@ -213,20 +213,20 @@ Use `npm ci` instead of `npm install` in CI and Docker builds so the installed v
 
 Defined in `.env` (template: `.env.example`).
 
-| Variable | Description |
-|---|---|
-| `DJANGO_SECRET_KEY` | Django secret key. Use a long random value. |
-| `DJANGO_DEBUG` | `True` for local development only. |
-| `DJANGO_ALLOWED_HOSTS` | Comma-separated allowed hosts. |
-| `POSTGRES_DB` | Database name. |
-| `POSTGRES_USER` | Database user. |
-| `POSTGRES_PASSWORD` | Database password. |
-| `POSTGRES_HOST` | `localhost` when Django runs on the host; `db` when it runs inside Docker Compose. |
-| `POSTGRES_PORT` | Host port mapped to PostgreSQL's port 5432 inside the container. |
-| `REDIS_PORT` | Host port mapped to Redis's port 6379 inside the container. |
-| `REDIS_URL` | Redis connection URL used by Celery. Must match `REDIS_PORT`. |
-| `CORS_ALLOWED_ORIGINS` | Allowed frontend origin(s). |
-| `TIME_ZONE` | Default time zone (`Asia/Jakarta` for the demo organization). |
+| Variable               | Description                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| `DJANGO_SECRET_KEY`    | Django secret key. Use a long random value.                                        |
+| `DJANGO_DEBUG`         | `True` for local development only.                                                 |
+| `DJANGO_ALLOWED_HOSTS` | Comma-separated allowed hosts.                                                     |
+| `POSTGRES_DB`          | Database name.                                                                     |
+| `POSTGRES_USER`        | Database user.                                                                     |
+| `POSTGRES_PASSWORD`    | Database password.                                                                 |
+| `POSTGRES_HOST`        | `localhost` when Django runs on the host; `db` when it runs inside Docker Compose. |
+| `POSTGRES_PORT`        | Host port mapped to PostgreSQL's port 5432 inside the container.                   |
+| `REDIS_PORT`           | Host port mapped to Redis's port 6379 inside the container.                        |
+| `REDIS_URL`            | Redis connection URL used by Celery. Must match `REDIS_PORT`.                      |
+| `CORS_ALLOWED_ORIGINS` | Allowed frontend origin(s).                                                        |
+| `TIME_ZONE`            | Default time zone (`Asia/Jakarta` for the demo organization).                      |
 
 ## Testing
 
@@ -244,33 +244,34 @@ Test priorities: authentication, organization data isolation for every resource,
 
 ## Documentation
 
-| Document | Contents |
-|---|---|
-| [Project specification](docs/MaintenX_Project_Specification.md) | Product scope, requirements, phases, acceptance criteria |
-| [Architecture](docs/architecture.md) | Modules, request flow, tenant isolation, background jobs |
-| [Database design](docs/database-design.md) | Tables, constraints, enums, KPI data requirements |
-| [API guide](docs/api-guide.md) | Endpoints, roles, request/response examples, error conventions |
+| Document                                                        | Contents                                                       |
+| --------------------------------------------------------------- | -------------------------------------------------------------- |
+| [Project specification](docs/MaintenX_Project_Specification.md) | Product scope, requirements, phases, acceptance criteria       |
+| [Architecture](docs/architecture.md)                            | Modules, request flow, tenant isolation, background jobs       |
+| [Database design](docs/database-design.md)                      | Tables, constraints, enums, KPI data requirements              |
+| [API guide](docs/api-guide.md)                                  | Endpoints, roles, request/response examples, error conventions |
 
 Interactive API documentation (Swagger UI) will be linked here once the API is available.
 
 ## Progress
 
-| Phase | Scope | Status |
-|---|---|---|
-| 0 | Environment setup, project initialization | ✅ Done |
-| 1 | Backend foundation, data model, authentication, tenant isolation | ⬜ Next |
-| 2 | Equipment management | ⬜ Planned |
-| 3 | Preventive maintenance scheduling (Celery) | ⬜ Planned |
-| 4 | Work-order workflow | ⬜ Planned |
-| 5 | Downtime tracking and analytics | ⬜ Planned |
-| 6 | Integration, testing, hardening | ⬜ Planned |
-| 7 | Docker, deployment, seed data, documentation, demo | ⬜ Planned |
+| Phase | Scope                                                            | Status     |
+| ----- | ---------------------------------------------------------------- | ---------- |
+| 0     | Environment setup, project initialization                        | ✅ Done    |
+| 1     | Backend foundation, data model, authentication, tenant isolation | ✅ Done    |
+| 2     | Equipment management                                             | ⬜ Planned |
+| 3     | Preventive maintenance scheduling (Celery)                       | ⬜ Planned |
+| 4     | Work-order workflow                                              | ⬜ Planned |
+| 5     | Downtime tracking and analytics                                  | ⬜ Planned |
+| 6     | Integration, testing, hardening                                  | ⬜ Planned |
+| 7     | Docker, deployment, seed data, documentation, demo               | ⬜ Planned |
 
 ### Progress log
 
 Newest first. Add an entry at the end of each phase.
 
 - **2026-11-03 — Phase 0 complete.** Django project and seven apps created, React + TypeScript + Vite + Tailwind initialized, PostgreSQL and Redis running in Docker Compose, project documentation added.
+- **2026-11-04 — Phase 1 complete.** Settings read from `.env`; custom `Organization` and `User` models; JWT login, refresh rotation with blacklist, logout, and `/auth/me/`; admin user management and `/users/technicians/`; organization-scoped queryset mixin and role permissions in `core/`; Swagger UI at `/api/v1/docs/`; 44 tests covering auth, permissions, and cross-organization isolation.
 
 ## Known limitations
 
@@ -279,7 +280,7 @@ Newest first. Add an entry at the end of each phase.
 - MTBF is an estimate based on a configurable assumed operating-hours value, not sensor data.
 - No notifications, attachments, or exports yet.
 
-*This section will be updated as the implementation reveals more.*
+_This section will be updated as the implementation reveals more._
 
 ## Roadmap
 
