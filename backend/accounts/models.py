@@ -10,11 +10,7 @@ from django.contrib.auth.models import (
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q
-
-class Role(models.TextChoices):
-    ADMIN = "ADMIN", "admin"
-    MANAGER = "MANAGER", "manager"
-    TECHNICIAN = "TECHNICIAN", "technician"
+from core.roles import Role
 
 class Organization(models.Model):
     """Tenant. Semua data bisnis menempel ke satu organisasi."""

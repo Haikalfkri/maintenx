@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from accounts.models import Organization, Role, User
+from accounts.models import Organization, User
+from core.roles import Role
 
 DEMO_PASSWORD = "demo-password"  # hanya untuk data demo lokal
 

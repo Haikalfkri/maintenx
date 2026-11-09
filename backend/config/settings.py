@@ -128,7 +128,7 @@ REST_FRAMEWORK = {
     ],
     # Default aman: semua endpoint butuh login kecuali dinyatakan lain
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        "core.permissions.IsOrganizationMember",
     ],
     "DEFAULT_PAGINATION_CLASS": "core.pagination.StandardPagination",
     "DEFAULT_FILTER_BACKENDS": [
