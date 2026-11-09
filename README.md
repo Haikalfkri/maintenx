@@ -259,8 +259,8 @@ Interactive API documentation (Swagger UI) will be linked here once the API is a
 | ----- | ---------------------------------------------------------------- | ---------- |
 | 0     | Environment setup, project initialization                        | ✅ Done    |
 | 1     | Backend foundation, data model, authentication, tenant isolation | ✅ Done    |
-| 2     | Equipment management                                             | ⬜ Next    |
-| 3     | Preventive maintenance scheduling (Celery)                       | ⬜ Planned |
+| 2     | Equipment management                                             | ✅ Done    |
+| 3     | Preventive maintenance scheduling (Celery)                       | ⬜ Next    |
 | 4     | Work-order workflow                                              | ⬜ Planned |
 | 5     | Downtime tracking and analytics                                  | ⬜ Planned |
 | 6     | Integration, testing, hardening                                  | ⬜ Planned |
@@ -272,6 +272,7 @@ Newest first. Add an entry at the end of each phase.
 
 - **2026-11-03 — Phase 0 complete.** Django project and seven apps created, React + TypeScript + Vite + Tailwind initialized, PostgreSQL and Redis running in Docker Compose, project documentation added.
 - **2026-11-04 — Phase 1 complete.** Settings read from `.env`; custom `Organization` and `User` models; JWT login, refresh rotation with blacklist, logout, and `/auth/me/`; admin user management and `/users/technicians/`; organization-scoped queryset mixin and role permissions in `core/`; Swagger UI at `/api/v1/docs/`; 44 tests covering auth, permissions, and cross-organization isolation.
+- **2026-11-10 — Phase 2 complete.** Equipment categories and equipment CRUD with search, filters, pagination, retire (no hard delete), and audit-based history; `AuditLog` model and reusable `OrganizationScopedRelatedField`/`ConflictError` helpers in `core/`; React app shell with login, token refresh, protected and role-based routes, and equipment list/detail/form pages; 104 backend tests plus UI integration checks against a live API.
 
 ## Known limitations
 
