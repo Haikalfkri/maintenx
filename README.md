@@ -259,7 +259,7 @@ Interactive API documentation (Swagger UI) will be linked here once the API is a
 | ----- | ---------------------------------------------------------------- | ---------- |
 | 0     | Environment setup, project initialization                        | ✅ Done    |
 | 1     | Backend foundation, data model, authentication, tenant isolation | ✅ Done    |
-| 2     | Equipment management                                             | ⬜ Planned |
+| 2     | Equipment management                                             | ⬜ Next    |
 | 3     | Preventive maintenance scheduling (Celery)                       | ⬜ Planned |
 | 4     | Work-order workflow                                              | ⬜ Planned |
 | 5     | Downtime tracking and analytics                                  | ⬜ Planned |
