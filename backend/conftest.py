@@ -6,6 +6,7 @@ from rest_framework.test import APIClient
 
 from accounts.models import Organization, User
 from core.roles import Role
+from equipment.models import Equipment, EquipmentCategory
 
 PASSWORD = "TestPass12345!"
 
@@ -81,3 +82,39 @@ def auth_client():
         return client
 
     return _client
+
+
+# --- equipment ---------------------------------------------------------------
+
+@pytest.fixture
+def category_a(org_a):
+    return EquipmentCategory.objects.create(organization=org_a, name="CNC Machine")
+
+
+@pytest.fixture
+def category_b(org_b):
+    return EquipmentCategory.objects.create(organization=org_b, name="Welding")
+
+
+@pytest.fixture
+def equipment_a(org_a, category_a):
+    return Equipment.objects.create(
+        organization=org_a,
+        category=category_a,
+        equipment_code="CNC-001",
+        name="CNC Milling Machine",
+        location="Production Hall A",
+        serial_number="SN-1001",
+    )
+
+
+@pytest.fixture
+def equipment_b(org_b, category_b):
+    # Kode sama dengan equipment_a: sah karena unik per organisasi
+    return Equipment.objects.create(
+        organization=org_b,
+        category=category_b,
+        equipment_code="CNC-001",
+        name="Welding Robot",
+        location="Workshop 1",
+    )
