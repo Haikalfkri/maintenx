@@ -25,6 +25,7 @@ class Organization(models.Model):
         validators=[MinValueValidator(Decimal("0.01"))],
         help_text="Dipakai untuk estimasi MTBF."
     )
+    work_order_sequence = models.PositiveIntegerField(default=0, editable=False)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

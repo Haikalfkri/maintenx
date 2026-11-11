@@ -10,4 +10,6 @@ urlpatterns = [
     # API
     path("api/v1/", include("accounts.urls")),
     path("api/v1/", include("equipment.urls")),
+    path("api/v1/", include("equipment.urls")),
+    path("api/v1/", include("maintenance.urls")),
 ]

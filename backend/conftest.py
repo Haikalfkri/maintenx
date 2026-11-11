@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 from accounts.models import Organization, User
 from core.roles import Role
 from equipment.models import Equipment, EquipmentCategory
+from maintenance.models import MaintenancePlan
 
 PASSWORD = "TestPass12345!"
 
@@ -118,3 +119,24 @@ def equipment_b(org_b, category_b):
         name="Welding Robot",
         location="Workshop 1",
     )
+
+# --- maintenance -------------------------------------------------------------
+
+@pytest.fixture
+def make_plan(db):
+    """Pemakaian: make_plan(equipment, start_date=..., next_due_date=..., **opsional)."""
+    from datetime import date
+
+    def _make(equipment, **overrides):
+        data = {
+            "organization": equipment.organization,
+            "equipment": equipment,
+            "title": "Monthly inspection",
+            "frequency": "MONTHLY",
+            "start_date": date(2026, 11, 1),
+            "next_due_date": date(2026, 11, 1),
+        }
+        data.update(overrides)
+        return MaintenancePlan.objects.create(**data)
+
+    return _make

@@ -5,6 +5,7 @@ Semua nilai yang berbeda antar lingkungan dibaca dari file .env di root project.
 """
 from datetime import timedelta
 from pathlib import Path
+from celery.schedules import crontab
 
 import environ
 
@@ -164,3 +165,13 @@ CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 # ---------------------------------------------------------------------------
 CELERY_BROKER_URL = env("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_TIMEZONE = "UTC"
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# Penjadwal (Celery Beat): satu kali sehari, 01:00 UTC = 08:00 WIB.
+# Tanggal 'hari ini' tetap dihitung per organisasi sesuai timezone-nya.
+CELERY_BEAT_SCHEDULE = {
+    "generate-due-maintenance-work-orders": {
+        "task": "maintenance.generate_due_work_orders",
+        "schedule": crontab(hour=1, minute=0),
+    },
+}

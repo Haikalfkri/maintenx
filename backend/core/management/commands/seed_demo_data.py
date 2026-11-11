@@ -1,12 +1,27 @@
+from datetime import timedelta
+
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
 
 from accounts.models import Organization, User
+from core.dates import organization_today
 from core.roles import Role
 from equipment.models import Equipment, EquipmentCategory, EquipmentStatus
+from maintenance.models import MaintenancePlan
 
 DEMO_PASSWORD = "demo-password"  # hanya untuk data demo lokal
+
+# Plan demo: (kode equipment, judul, frekuensi, start_date, next_due_date, aktif, teknisi)
+# Tanggal berupa selisih hari dari 'hari ini' agar status berbeda-beda (upcoming/due/overdue/inactive).
+DEMO_PLANS = [
+    ("CNC-001", "Monthly lubrication inspection", "MONTHLY", 7, 7, True, "technician@example.com"),
+    ("CMP-001", "Weekly compressor drain check", "WEEKLY", -10, -3, True, "technician@example.com"),
+    ("CNV-001", "Daily conveyor belt check", "DAILY", 0, 0, True, "technician2@example.com"),
+    ("GEN-001", "Monthly generator test run", "MONTHLY", 20, 20, True, None),
+    ("PRS-001", "Weekly hydraulic oil check", "WEEKLY", -20, -6, False, None),
+]
+
 
 DEMO_DATA = [
     {
@@ -70,6 +85,8 @@ class Command(BaseCommand):
             self._seed_users(org, org_data["users"])
             categories = self._seed_categories(org, org_data["categories"])
             self._seed_equipment(org, categories, org_data["equipment"])
+            if org.slug == "demo-manufacturing":
+                self._seed_plans(org)
 
         self.stdout.write(self.style.SUCCESS(f"Selesai. Password demo: {DEMO_PASSWORD}"))
 
@@ -114,3 +131,22 @@ class Command(BaseCommand):
                 },
             )
             self.stdout.write(f"  {'Created' if created else 'Exists '} equipment: {code}")
+
+    def _seed_plans(self, org):
+        today = organization_today(org)
+        for code, title, frequency, start_offset, due_offset, active, technician in DEMO_PLANS:
+            _, created = MaintenancePlan.objects.get_or_create(
+                organization=org,
+                equipment=Equipment.objects.get(organization=org, equipment_code=code),
+                title=title,
+                defaults={
+                    "frequency": frequency,
+                    "start_date": today + timedelta(days=start_offset),
+                    "next_due_date": today + timedelta(days=due_offset),
+                    "is_active": active,
+                    "default_technician": (
+                        User.objects.get(email=technician) if technician else None
+                    ),
+                },
+            )
+            self.stdout.write(f"  {'Created' if created else 'Exists '} plan: {title}")
